@@ -53,6 +53,10 @@ personagens = {
     }
 }
 
+usuarios = {
+    'nome' : 'leonardo', 'senha' : '1234', 'email' : 'leonardotaianav@outlook.com' 
+}
+
 
 app = Flask(__name__)
 
