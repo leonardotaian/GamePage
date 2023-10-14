@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <title>Crie sua conta</title>
+
+    <link rel="stylesheet" href="../static/css/cadastro.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;700&family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <h1>CRIE SUA CONTA</h1>
+
+    <form action="/cadastro" id="cadastro" method="post">
+        <label for="user">Nome de Usuário</label>
+        <input type="text" nome="nome" id="username">
+        <label for="password">Senha</label>
+        <input type="password" senha="senha" id="senha">
+        <label for="mail">E-mail</label>
+        <input type="text" email="email" id="email">
+    </form>
+    <p></p>
+    <form action="../templates/login.html">
+        <input type="submit" value="Finalizar Cadastro"/>
+    </form>
+
+</body>
+
+</html>

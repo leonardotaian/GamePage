@@ -7,6 +7,9 @@ body {
     font-family: 'Oswald', sans-serif;
     font-size: larger;
 }
+h1 {
+    font-family: 'Oswald', sans-serif;
+}
 
 input {
     display: block;
