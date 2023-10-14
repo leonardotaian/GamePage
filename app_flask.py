@@ -1,6 +1,5 @@
 from flask import Flask, render_template
-from flask_login import login_manager
-from flask_sqlalchemy import SQLALchemy
+
 
 personagens = {
     1:{
@@ -61,16 +60,19 @@ usuarios = {
 }
 
 
-db = SQLALchemy()
-
 app = Flask(__name__)
+
 
 @app.route("/")
 def cs():
-    return "Eae men kk!"
+    return render_template('login.html')
 
 @app.route("/personagem/<int:personagem_id>")
 def mostra_personagem(personagem_id):
     return render_template('personagem.html', **personagens[personagem_id])
+
+@app.route("/templates/cadastro.html")
+def cadastro():
+    return render_template('cadastro.html')        
 
 app.run(debug=True)
