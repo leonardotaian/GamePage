@@ -1,0 +1,15 @@
+body {
+    color: aliceblue;
+    background-image: url(https://i.pinimg.com/originals/b1/77/a8/b177a8f126bf63a63ebd97edb8490380.jpg);
+    background-repeat: no-repeat;
+    background-size: auto;
+    font-family: 'Oswald', sans-serif;
+    font-size: larger;
+}
+h1 {
+    font-family: 'Oswald', sans-serif;
+}
+
+input {
+    display: block;
+}
