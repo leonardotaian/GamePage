@@ -47,9 +47,9 @@ def cadastro():
 @app.route('/perfil.html')
 def perfil():
     if 'username' in session:
-        return f'Olá, {session["username"]}! Bem-vindo ao seu perfil.'
+        return render_template('perfil.html')
     else:
-        return redirect(url_for('inicio'))
+        return render_template('login.html')
 
 @app.route('/logout')
 def logout():
