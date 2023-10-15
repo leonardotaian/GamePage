@@ -1,78 +1,53 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, session
+
+app = Flask(__name__, template_folder='templates')
+app.secret_key = 'tentedescobrir'
 
 
-personagens = {
-    1:{
-        "nome": "SAS",
-        "origem": "Escócia",
-        "imagem": "https://www.sitecs.net/images/players/sas_a.jpg"
-    },
-    2: {
-        "nome": "GSG9",
-        "origem": "Alemanha",
-        "imagem": "https://www.sitecs.net/images/players/gsg9_a.jpg"
-    },
-    3: {
-        "nome": "GIGN",
-        "origem": "França",
-        "imagem": "https://www.sitecs.net/images/players/gign_a.jpg"
-    },
-    4: {
-        "nome": "Terror",
-        "origem": "Egito",
-        "imagem": "https://www.sitecs.net/images/players/terror_a.jpg"
-    },
-    5: {
-        "nome": "Arab",
-        "origem": "Palestina",
-        "imagem": "https://www.sitecs.net/images/players/arab_a.jpg"   
-    },
-    6: {
-        "nome": "Guerrila",
-        "origem": "Cuba",
-        "imagem": "https://www.sitecs.net/images/players/gor_a.jpg"   
-    },
-    7: {
-        "nome": "Artic",
-        "origem": "Rússia",
-        "imagem": "https://www.sitecs.net/images/players/arctic_a.jpg"   
-    },
-    8: {
-        "nome": "Seal Team Six",
-        "origem": "EUA",
-        "imagem": "https://www.sitecs.net/images/players/urban_a.jpg"   
-    },
-    9: {
-        "nome": "VIP",
-        "origem": "Inglaterra",
-        "imagem": "https://www.sitecs.net/images/players/vip_a.jpg"   
-    },
-    10: {
-        "nome": "Hostage",
-        "origem": "Desconhecido",
-        "imagem": "https://www.sitecs.net/images/players/hostage1_a.jpg"   
-    }
-}
+usuarios = {'leonardo' : '123',
+            'adenilde' : '123',
+            'rafael' : '123',
+            'elias' : '123',
+            'thoday' : '123',
+            'cleber' : '123',
+            'erik' : '123',
+            'bruno' : '123'
+            }
 
-
-usuarios = {
-    'nome' : 'leonardo', 'senha' : '1234', 'email' : 'leonardotaianav@outlook.com' 
-}
-
-
-app = Flask(__name__)
-
-
-@app.route("/")
-def cs():
+@app.route('/')
+def inicio():
     return render_template('login.html')
 
-@app.route("/personagem/<int:personagem_id>")
-def mostra_personagem(personagem_id):
-    return render_template('personagem.html', **personagens[personagem_id])
-
-@app.route("/templates/cadastro.html")
+@app.route ('/login.html', methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+    
+    if username in usuarios and usuarios[username] == password:
+        session['username'] = username
+        return render_template('perfil.html')
+    
+@app.route('/cadastro.html')
 def cadastro():
-    return render_template('cadastro.html')        
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        usuarios['username'] = 'password'
+        
+        return render_template('login.html')
+        
 
-app.run(debug=True)
+@app.route('/perfil.html')
+def perfil():
+    if 'username' in session:
+        return f'Olá, {session["username"]}! Bem-vindo ao seu perfil.'
+    
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))      
+
+if __name__ == '__main__':
+    app.run(debug=True)   
