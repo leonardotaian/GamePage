@@ -1,60 +1,31 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+import sqlite3
 
-app = Flask(__name__, template_folder='templates')
-app.secret_key = 'tentedescobrir'
+app = Flask(__name__)
 
-usuarios = {
-    'leonardo': '123',
-    'adenilde': '123',
-    'rafael': '123',
-    'elias': '123',
-    'thoday': '123',
-    'cleber': '123',
-    'erik': '123',
-    'bruno': '123',
-    'gabriel': '123'
-}
+
 
 @app.route('/')
-def inicio():
-    return render_template('login.html')
-
-@app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        if username in usuarios and usuarios[username] == password:
-            session['username'] = username
-            return redirect(url_for('perfil'))
+        conn = sqlite3.connect('user.db')
+        cursor = conn.cursor()
+        nome = request.form['nome']
+        senha = request.form['senha']
+        print(nome)
+        print(senha)
+        select = 'SELECT email, senha FROM usuarios WHERE email = "'+nome+'" and senha = "'+senha+'"'
+        cursor.execute(select)
+        result = cursor.fetchall
+        if len(result) == 0:
+            print("Credenciais inválidas")
         else:
-            return "Usuário ou senha inválidos."
+            user = 'SELECT * FROM usuarios WHERE nome = "'+nome+'"'
+            cursor.execute(user)
+            user = cursor.fetchall()
+            print(user)
+            return render_template('perfil.html')
+    return render_template('login.html')
 
-@app.route('/cadastro.html', methods=['GET', 'POST'])
-def cadastro():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
 
-        if username not in usuarios:
-            usuarios[username] = password
-            return redirect(url_for('inicio'))
-        else:
-            return "Nome de usuário já em uso."
-    return render_template('cadastro.html') 
-
-@app.route('/perfil.html')
-def perfil():
-    if 'username' in session:
-        return render_template('perfil.html')
-    else:
-        return render_template('login.html')
-
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('inicio'))
-
-if __name__ == '__main__':
-    app.run(debug=True)
+app.run(debug=True)
