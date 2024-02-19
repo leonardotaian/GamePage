@@ -10,14 +10,13 @@
 <body>
     <h1>CRIE SUA CONTA</h1>
 
-    <form action="/cadastro" id="cadastro" method="post">
-        <label for="username">Nome de Usuário</label>
-        <input type="text" name="username" id="username"> 
-        <label for="password">Senha</label>
-        <input type="password" name="password" id="senha">
-    </form>
-    <p></p>
-    <form action="/cadastro.html" method="get">
+    <form action="/cadastro" id="cadastro" method="POST">
+        <label for="nome">Nome de Usuário</label>
+        <input type="text" name="nome" id="nome">
+        <label for="email">E-mail</label>
+        <input type="text" name="email" id="email">  
+        <label for="senha">Senha</label>
+        <input type="password" name="senha" id="senha">
         <input type="submit" value="Finalizar Cadastro"/>
     </form>
 </body>
