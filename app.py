@@ -25,14 +25,22 @@ def home():
             return render_template("login.html")
     return render_template("login.html")
 
-@app.route('/cadastro', methods = ['POST', 'GET'])
+@app.route('/cadastro', methods=['POST', 'GET'])
 def cadastro():
     if request.method == "POST":
         nome = request.form['nome']
         email = request.form['email']
         senha = request.form['senha']
-        rep.cadastro(nome=nome,email=email,senha=senha)
-        return render_template ('perfil.html')
+        
+        email_duplo = rep.verif(email=email)
+        if not email_duplo:
+            cadastro_result = rep.cadastro(nome=nome, email=email, senha=senha)
+            if cadastro_result:
+                return render_template('perfil.html', usuario=nome)
+            else:
+                return "Erro ao cadastrar usuário"
+    
     return render_template('cadastro.html')
+    
 
 app.run(debug=True)
